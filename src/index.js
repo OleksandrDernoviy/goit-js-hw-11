@@ -3,10 +3,15 @@ import Notiflix from 'notiflix';
 import { Notify } from 'notiflix/build/notiflix-notify-aio';
 import SimpleLightbox from 'simplelightbox';
 import "simplelightbox/dist/simple-lightbox.min.css";
-import {getImages} from './pixby-api'
+import { getImages } from './pixby-api'
 import './sass/styles.css'
 
-const lightbox = new SimpleLightbox('.gallery a');
+
+const lightbox = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+   captionDelay: 250,
+    close: false,
+});
 const formEl = document.querySelector('#search-form')
 const searchQueryEl = document.querySelector('[searchQuery]')
 const galleryEl = document.querySelector('.gallery')
@@ -45,6 +50,7 @@ formEl.addEventListener('submit', onSubmit)
      page = 1
      galeryDel()
 
+
   if (querry === '') {
     loadMoreBtnEl.classList.remove('show-btn')
     return Notiflix.Notify.failure(
@@ -56,6 +62,7 @@ formEl.addEventListener('submit', onSubmit)
     const gallerySearch = await getImages(querry, page)
         let numberPages = gallerySearch.data.totalHits
     console.log(gallerySearch);
+    
     if (gallerySearch.data.hits.length === 0) {
          galeryDel()
          Notiflix.Notify.failure(
@@ -88,7 +95,6 @@ loadMoreBtnEl.addEventListener('click', onClick)
 async function onClick() {
   page += 1;
   let querry = formEl.elements.searchQuery.value.trim();
-
     try {
       const gallerySearch = await getImages(querry, page);
       let showPages = gallerySearch.data.totalHits / perPage;
@@ -107,6 +113,8 @@ async function onClick() {
     );
   }
   lightbox.refresh();
+  
+
 }
 
 function galeryDel() {
@@ -114,7 +122,6 @@ function galeryDel() {
     page = 1;
     loadMoreBtnEl.classList.remove('show-btn')
 }
-
 
 
 
