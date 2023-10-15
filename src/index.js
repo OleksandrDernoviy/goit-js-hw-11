@@ -7,18 +7,17 @@ import { getImages } from './pixby-api'
 import './sass/styles.css'
 
 
+const formEl = document.querySelector('#search-form')
+const searchQueryEl = document.querySelector('[searchQuery]')
+const galleryEl = document.querySelector('.gallery')
+const loadMoreBtnEl = document.querySelector('.load-more')
 const lightbox = new SimpleLightbox('.gallery a', {
   captionsData: 'alt',
    captionDelay: 250,
     close: false,
 });
-const formEl = document.querySelector('#search-form')
-const searchQueryEl = document.querySelector('[searchQuery]')
-const galleryEl = document.querySelector('.gallery')
-const loadMoreBtnEl = document.querySelector('.load-more')
 const perPage = 40
 let page = 1
-
 
 
 function renderMarkup(images) {
@@ -61,7 +60,7 @@ formEl.addEventListener('submit', onSubmit)
   try {
     const gallerySearch = await getImages(querry, page)
         let numberPages = gallerySearch.data.totalHits
-    console.log(gallerySearch);
+    // console.log(gallerySearch);
     
     if (gallerySearch.data.hits.length === 0) {
          galeryDel()
@@ -106,7 +105,8 @@ async function onClick() {
        );
     }
 
-    renderMarkup(gallerySearch.data.hits);
+      renderMarkup(gallerySearch.data.hits);
+      scrollUp()
   } catch (error) {
     Notiflix.Notify.failure(
       'Sorry, there are no images matching your search query. Please try again.'
@@ -123,6 +123,15 @@ function galeryDel() {
     loadMoreBtnEl.classList.remove('show-btn')
 }
 
+function scrollUp() {
+const { height: cardHeight } = document
+  .querySelector(".gallery")
+  .firstElementChild.getBoundingClientRect();
 
+  window.scrollBy({
+    top: cardHeight * 2,
+    behavior: "smooth",
+  });
+}
 
 

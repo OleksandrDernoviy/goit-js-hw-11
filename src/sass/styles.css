@@ -12,6 +12,10 @@
     border-radius: 5px;
     border: none;
 }
+
+.load-more:hover {
+    color: yellow;
+}
 .show-btn {
     display: block;
 }
@@ -41,14 +45,20 @@ a {
 input {
     padding: 5px;
     border-radius: 4px;
+    border: 1px solid rgb(92, 88, 88);
     cursor: pointer;
-    background-color: grey
+    background-color: gray
 }
 
 .search-form button:hover {
-    color: yellow
+    color: yellow;
+    /* border-color: yellow; */
+    border: none;
 }
 
+.search-form input:focus {
+    border-color: yellow;
+}
 input {
     width: 300px;
     height: 35px;
@@ -61,7 +71,7 @@ input {
 }
 
 ::placeholder {
-    color: green
+    color: black
 }
 .gallery {
     margin-top: 15px;
@@ -71,12 +81,15 @@ input {
 }
 
 img {
+    border-radius: 15px;
+    width: 100%;
     width: 400px;
     height: 250px;
     object-fit: cover;
 }
 
 .photo-card {
+    /* height: 100vh; */
     border-radius: 15px;
     margin: 10px;
     /* border: solid 1px black; */
@@ -84,10 +97,15 @@ img {
     background-color: rgb(90, 107, 90);
     flex-direction: column;
     border-color: green;
+    transition-property: box-shadow;
+    transition-duration: 250ms;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+
 }
 
 .photo-card:hover {
 box-shadow: 0px 2px 6px 0px rgba(2, 56, 16, 0.68);
+box-shadow: 0px 6px 8px 0px rgba(202, 233, 25, 0.68);
 }
 
 .info {
